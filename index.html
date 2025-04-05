@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Store - Version B</title>
+    <title>Online Store - Version A</title>
     <link rel="stylesheet" href="../assets/styles.css">
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Arial', sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 20px;
-            background-color: var(--secondary-color);
+            background-color: var(--background-color);
             font-size: 22px;
-            color: #333;
         }
 
         .container {
@@ -23,55 +22,10 @@
         }
 
         h1 {
-            color: white;
+            color: var(--secondary-color);
             text-align: center;
             margin-bottom: 40px;
             font-size: 2.5em;
-        }
-
-        .featured-section {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            padding: 40px 20px;
-            margin: -20px -20px 30px -20px;
-            color: white;
-        }
-
-        .featured-product {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 30px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            align-items: center;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        .featured-product img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .featured-product img:hover {
-            transform: scale(1.05);
-        }
-
-        .featured-content {
-            color: white;
-        }
-
-        .featured-content h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-
-        .featured-price {
-            font-size: 2em;
-            margin: 20px 0;
         }
 
         .products-grid {
@@ -79,54 +33,28 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             padding: 20px;
-            background: white;
-            border-radius: 15px;
         }
 
-        .product-card {
-            opacity: 0;
-            animation: fadeIn 0.5s ease-out forwards;
+        .product-details {
+            margin: 15px 0;
+        }
+
+        .product-title {
+            font-size: 1.3em;
+            margin: 10px 0;
+            color: var(--secondary-color);
         }
 
         .cart-count {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: white;
-            color: var(--accent-color);
+            background: var(--accent-color);
+            color: white;
             padding: 10px 20px;
             border-radius: 25px;
             font-weight: bold;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            animation: bounce 0.5s ease;
-        }
-
-        .btn-featured {
-            background-color: white;
-            color: var(--accent-color);
-            font-size: 1.2em;
-            padding: 15px 30px;
-        }
-
-        .btn-featured:hover {
-            background-color: #f8f9fa;
-            transform: scale(1.05);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        @media (max-width: 768px) {
-            .featured-product {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
@@ -135,20 +63,6 @@
     <div class="container">
         <h1>Our Products</h1>
         
-        <div class="featured-section">
-            <div class="featured-product">
-                <img src="https://cdn.headphonecheck.com/wp-content/uploads/tps_1335_512635_January00099-512635-1920x1080.jpg" alt="Premium Headphones">
-                <div class="featured-content">
-                    <h2>Premium Headphones</h2>
-                    <p>Experience unparalleled sound quality with our flagship wireless headphones. Features active noise cancellation and premium build quality.</p>
-                    <div class="featured-price">€249.99</div>
-                    <button class="btn btn-featured" data-product-id="1" onclick="addToCart(1)">
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <div class="products-grid" id="productsGrid">
             <!-- Products will be dynamically inserted here -->
         </div>
@@ -156,6 +70,13 @@
 
     <script>
         const products = [
+            {
+                id: 1,
+                name: 'Premium Headphones',
+                price: 249.99,
+                image: 'https://cdn.headphonecheck.com/wp-content/uploads/tps_1335_512635_January00099-512635-1920x1080.jpg',
+                description: 'High-quality wireless headphones with noise cancellation'
+            },
             {
                 id: 2,
                 name: 'Smart Watch',
@@ -182,11 +103,7 @@
         let cart = 0;
 
         function updateCart() {
-            const cartCount = document.getElementById('cartCount');
-            cartCount.textContent = `Cart: ${cart}`;
-            cartCount.style.animation = 'none';
-            cartCount.offsetHeight; // Trigger reflow
-            cartCount.style.animation = 'bounce 0.5s ease';
+            document.getElementById('cartCount').textContent = `Cart: ${cart}`;
         }
 
         function addToCart(productId) {
@@ -216,12 +133,6 @@
         window.onload = () => {
             const productsGrid = document.getElementById('productsGrid');
             productsGrid.innerHTML = products.map(createProductCard).join('');
-
-            // Add staggered animation to product cards
-            const cards = document.querySelectorAll('.product-card');
-            cards.forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.1}s`;
-            });
         };
     </script>
 </body>
